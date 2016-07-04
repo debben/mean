@@ -19,7 +19,8 @@ var config = require('../config'),
   consolidate = require('consolidate'),
   path = require('path'),
   _ = require('lodash'),
-  lusca = require('lusca');
+  lusca = require('lusca'),
+  webpackMiddleware = require('webpack-dev-middleware');
 
 /**
  * Initialize local variables
@@ -162,13 +163,26 @@ module.exports.initHelmetHeaders = function (app) {
  * Configure the modules static routes
  */
 module.exports.initModulesClientRoutes = function (app) {
-  // Setting the app router and static folder
-  app.use('/', express.static(path.resolve('./public')));
+  if (process.env.NODE_ENV === 'development') {
+    var webpackConfig = require('../assets/webpack.config.js');
+    var webpack = require('webpack');
 
-  // Globbing static routing
-  config.folders.client.forEach(function (staticPath) {
-    app.use(staticPath, express.static(path.resolve('./' + staticPath)));
-  });
+    app.use(webpackMiddleware(webpack(webpackConfig),
+      {
+        watchOptions: {
+          aggregateTimeout: 300,
+          poll: true
+        },
+        publicPath: '/'
+      }));
+  }
+  // Setting the app router and static folder
+  // app.use('/', express.static(path.resolve('./public')));
+  //
+  // // Globbing static routing
+  // config.folders.client.forEach(function (staticPath) {
+  //   app.use(staticPath, express.static(path.resolve('./' + staticPath)));
+  // });
 };
 
 /**

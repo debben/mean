@@ -16,6 +16,10 @@ app/tests/coverage/
 .idea/
 coverage/
 
+# NG2 related things
+# ==========================
+typings/*
+
 # MEAN.js app and assets
 # ======================
 public/dist/
