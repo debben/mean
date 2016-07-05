@@ -79,7 +79,7 @@ module.exports = {
      *
      * See: http://webpack.github.io/docs/configuration.html#resolve-extensions
      */
-    extensions: ['', '.ts', '.js'],
+    extensions: ['', '.ts', '.js', '.scss'],
 
     root: './modules',
 
@@ -176,6 +176,11 @@ module.exports = {
         loader: 'raw-loader'
       },
 
+      {
+        test: /\.scss$/,
+        loaders: ['raw-loader', 'sass-loader']
+      },
+
       /* Raw loader support for *.html
        * Returns file content as string
        *
@@ -185,7 +190,7 @@ module.exports = {
         test: /\.html$/,
         include: clientPaths,
         loader: 'raw-loader',
-	      exclude: [path.resolve('modules/core/server/views/index.server.view.html')]
+        exclude: [path.resolve('modules/core/server/views/index.server.view.html')]
       }
 
     ]
@@ -253,6 +258,14 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve('modules/core/server/views/index.server.view.html'),
       chunksSortMode: 'dependency'
+    }),
+
+    new webpack.ProvidePlugin({
+      jQuery: 'jquery',
+      $: 'jquery',
+      jquery: 'jquery',
+      'Tether': 'tether',
+      'window.Tether': 'tether'
     }),
 
     /*

@@ -3,8 +3,9 @@
  */
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouteConfig, Router } from '@angular/router-deprecated';
+import {BaPageTop, BaContentTop, BaSidebar, BaBackTop} from './theme/components';
 
-import { AppState } from './app.service';
+import { AppState } from './app.state';
 import { Home } from './home';
 import { RouterActive } from './router-active';
 
@@ -16,33 +17,21 @@ import { RouterActive } from './router-active';
   selector: 'app',
   pipes: [ ],
   providers: [ ],
-  directives: [ RouterActive ],
+  directives: [BaPageTop, BaSidebar, BaContentTop, BaBackTop],
   encapsulation: ViewEncapsulation.None,
   styles: [
     require('./app.css')
   ],
   template: `
-    <span router-active>
-      <button [routerLink]=" ['Index'] ">
-        Index
-      </button>
-    </span>
-    <span router-active>
-      <button [routerLink]=" ['Home'] ">
-        Home
-      </button>
-    </span>
-    <span router-active>
-      <button [routerLink]=" ['About'] ">
-        About
-      </button>
-    </span>
-
-    <main>
+  <ba-sidebar></ba-sidebar>
+  <ba-page-top></ba-page-top>
+  <main class="al-main">
+    <div class="al-content">
+      <ba-content-top></ba-content-top>
       <router-outlet></router-outlet>
-    </main>
-
-    <pre class="app-state">this.appState.state = {{ appState.state | json }}</pre>
+    </div>
+  </main>
+  <ba-back-top position="200"></ba-back-top>
   `
 })
 @RouteConfig([
@@ -62,7 +51,7 @@ export class App {
   }
 
   ngOnInit() {
-    console.log('Initial App State', this.appState.state);
+    //console.log('Initial App State', this.appState.state);
   }
 
 }
