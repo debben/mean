@@ -1,14 +1,19 @@
+import './app.loader.ts';
 /*
  * Angular 2 decorators and services
  */
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouteConfig, Router } from '@angular/router-deprecated';
 import {BaPageTop, BaContentTop, BaSidebar, BaBackTop} from './theme/components';
+import {BaImageLoaderService, BaThemePreloader, BaThemeSpinner} from './theme/services';
+import {BaThemeConfigProvider, BaThemeConfig} from './theme';
+import {BaThemeRun} from './theme/directives';
 
 import { AppState } from './app.state';
 import { Home } from './home';
 import { RouterActive } from './router-active';
 
+import {layoutPaths} from './theme/theme.constants';
 /*
  * App Component
  * Top Level Component
@@ -16,22 +21,26 @@ import { RouterActive } from './router-active';
 @Component({
   selector: 'app',
   pipes: [ ],
-  providers: [ ],
-  directives: [BaPageTop, BaSidebar, BaContentTop, BaBackTop],
+  providers: [BaThemeConfigProvider, BaThemeConfig, BaImageLoaderService, BaThemeSpinner],
+  directives: [BaPageTop, BaSidebar, BaContentTop, BaBackTop, BaThemeRun],
   encapsulation: ViewEncapsulation.None,
   styles: [
-    require('./app.css')
+    require('normalize.css'), require('./app.scss')
+    // require('./app.css')
   ],
   template: `
-  <ba-sidebar></ba-sidebar>
-  <ba-page-top></ba-page-top>
-  <main class="al-main">
-    <div class="al-content">
-      <ba-content-top></ba-content-top>
-      <router-outlet></router-outlet>
+  <main [ngClass]="{'menu-collapsed': isMenuCollapsed}" baThemeRun>
+    <div class="additional-bg"></div>
+    <ba-sidebar></ba-sidebar>
+    <ba-page-top></ba-page-top>
+    <div class="al-main">
+      <div class="al-content">
+        <ba-content-top></ba-content-top>
+        <router-outlet></router-outlet>
+      </div>
     </div>
+    <ba-back-top position="200"></ba-back-top>
   </main>
-  <ba-back-top position="200"></ba-back-top>
   `
 })
 @RouteConfig([
@@ -45,15 +54,31 @@ export class App {
   name = 'Angular 2 Webpack Starter';
   url = 'https://twitter.com/AngularClass';
 
-  constructor(
-    public appState: AppState) {
+  isMenuCollapsed:boolean = false;
 
+  constructor(private _state:AppState, private _imageLoader:BaImageLoaderService, private _spinner:BaThemeSpinner, private _config:BaThemeConfig) {
+    this._loadImages();
+
+    this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
+      this.isMenuCollapsed = isCollapsed;
+    });
+  }
+
+  public ngAfterViewInit():void {
+    // hide spinner once all loaders are completed
+    BaThemePreloader.load().then((values) => {
+      this._spinner.hide();
+    });
   }
 
   ngOnInit() {
-    //console.log('Initial App State', this.appState.state);
+    console.log('Initial App State', this._state);
   }
 
+  private _loadImages():void {
+    // register some loaders
+    BaThemePreloader.registerLoader(this._imageLoader.load(layoutPaths.images.root + 'sky-bg.jpg'));
+  }
 }
 
 /*

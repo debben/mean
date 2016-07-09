@@ -21,6 +21,7 @@ var CopyWebpackPlugin = (CopyWebpackPlugin = require('copy-webpack-plugin'), Cop
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlElementsPlugin = require('./html-elements-plugin');
 const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 /*
  * Webpack Constants
@@ -181,6 +182,24 @@ module.exports = {
         loaders: ['raw-loader', 'sass-loader']
       },
 
+      {
+        test: /initial\.scss$/,
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader')
+      },
+
+      {
+        test: /\.woff(2)?(\?v=.+)?$/, loader: 'url-loader?limit=10000&mimetype=application/font-woff'
+      },
+
+      {
+        test: /\.(ttf|eot|svg)(\?v=.+)?$/, loader: 'file-loader'
+      },
+
+      {
+        test: /bootstrap\/dist\/js\/umd\//,
+        loader: 'imports?jQuery=jquery'
+      },
+
       /* Raw loader support for *.html
        * Returns file content as string
        *
@@ -203,6 +222,9 @@ module.exports = {
    * See: http://webpack.github.io/docs/configuration.html#plugins
    */
   plugins: [
+    new ExtractTextPlugin('initial.css', {
+      allChunks: true
+    }),
 
   /*
      * Plugin: ForkCheckerPlugin
