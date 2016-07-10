@@ -1,4 +1,3 @@
-import './app.loader.ts';
 /*
  * Angular 2 decorators and services
  */
