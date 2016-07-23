@@ -13,6 +13,12 @@ import { Home } from './home';
 import { RouterActive } from './router-active';
 
 import {layoutPaths} from './theme/theme.constants';
+
+import { MenuConfig } from './theme/components/baSidebar/baSidebar.config.ts';
+
+// import the module listing to attach to the primary router
+import { Articles } from '../../../index.ts';
+
 /*
  * App Component
  * Top Level Component
@@ -44,9 +50,16 @@ import {layoutPaths} from './theme/theme.constants';
 })
 @RouteConfig([
   { path: '/',      name: 'Index', component: Home, useAsDefault: true },
+  { path: '/articles/...',      name: 'Articles', component: Articles },
   { path: '/home',  name: 'Home',  component: Home },
   // Async load a component using Webpack's require with es6-promise-loader and webpack `require`
 ])
+@MenuConfig
+([{
+  title: "Articles",
+  component: Articles,
+  icon: "ion-android-home"//ios-paper-outline",
+}])
 export class App {
   angularclassLogo = 'assets/img/angularclass-avatar.png';
   loading = false;

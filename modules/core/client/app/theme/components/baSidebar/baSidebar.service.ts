@@ -1,10 +1,55 @@
-import {Injectable} from '@angular/core';
-import {menuItems} from '../../../app.menu';
+import { Injectable, ApplicationRef, reflector, Component } from '@angular/core';
+import { MenuConfigImpl as MenuConfig } from './baSidebar.config';
+import { MenuDefinition } from './baSidebar.config';
+
+let menuItems:Array<MenuDefinition> = [];
 
 @Injectable()
 export class BaSidebarService {
 
   private _router;
+
+  constructor(appRef:ApplicationRef)
+  {
+    let component:Component;
+    if(appRef.componentTypes.length == 1)
+    {
+      component = appRef.componentTypes[0];
+      this.initMenuItems(menuItems, this.getMenuConfigFromComponent(component));
+    }
+  }
+
+  private initMenuItems(parentArray:Array<MenuDefinition>, config:MenuConfig)
+  {
+    let _this = this;
+    config.configs.forEach(function(menuDefinition:MenuDefinition){
+
+      let subMenuConfig:MenuConfig = _this.getMenuConfigFromComponent(config.component);
+      if(subMenuConfig){
+        _this.initMenuItems(menuDefinition.subMenu, subMenuConfig);
+      }
+    });
+    parentArray.push(...config.configs.map(function(config){
+      config.component = config.component.name;
+      return config;
+    }));
+  }
+
+  private getMenuConfigFromComponent(component:Component)
+  {
+    let retVal;
+    // make sure is type component.
+    if(component) {
+      let annotations = reflector.annotations(component);
+      annotations.forEach(function(annotation){
+        if(annotation instanceof MenuConfig)
+        {
+          retVal = annotation;
+        }
+      });
+    }
+    return retVal;
+  }
 
   public getMenuItems():Array<Object> {
     return menuItems;
