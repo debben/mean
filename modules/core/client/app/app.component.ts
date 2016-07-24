@@ -1,3 +1,5 @@
+import './app.loader.ts';
+
 /*
  * Angular 2 decorators and services
  */
@@ -58,7 +60,7 @@ import { Articles } from '../../../index.ts';
 ([{
   title: "Articles",
   component: Articles,
-  icon: "ion-android-home"//ios-paper-outline",
+  icon: "ion-ios-paper-outline",
 }])
 export class App {
   angularclassLogo = 'assets/img/angularclass-avatar.png';
