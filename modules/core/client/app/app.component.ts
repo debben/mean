@@ -37,7 +37,7 @@ import { Articles } from '../../../index.ts';
   <main [ngClass]="{'menu-collapsed': isMenuCollapsed}" baThemeRun>
     <div class="additional-bg"></div>
     <ba-sidebar></ba-sidebar>
-    <ba-page-top></ba-page-top>
+    <ba-page-top [title]="appTitle"></ba-page-top>
     <div class="al-main">
       <div class="al-content">
         <ba-content-top></ba-content-top>
@@ -64,6 +64,7 @@ export class App {
   angularclassLogo = 'assets/img/angularclass-avatar.png';
   loading = false;
   name = 'Angular 2 Webpack Starter';
+  appTitle = 'MEAN';
   url = 'https://twitter.com/AngularClass';
 
   isMenuCollapsed:boolean = false;
