@@ -62,7 +62,7 @@ module.exports = {
    * See: http://webpack.github.io/docs/configuration.html#entry
    */
   entry: {
-
+    'initial': './modules/core/client/app/theme/initial.scss',
     'polyfills': './modules/core/client/polyfills.browser.ts',
     'vendor': './modules/core/client/vendor.browser.ts',
     'main': './modules/core/client/main.browser.ts'
