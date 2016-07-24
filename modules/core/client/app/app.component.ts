@@ -32,8 +32,8 @@ import { Articles } from '../../../index.ts';
   directives: [BaPageTop, BaSidebar, BaContentTop, BaBackTop, BaThemeRun],
   encapsulation: ViewEncapsulation.None,
   styles: [
-    require('normalize.css'), require('./app.scss')
-    // require('./app.css')
+    //require('normalize.css'),
+    require('./app.scss')
   ],
   template: `
   <main [ngClass]="{'menu-collapsed': isMenuCollapsed}" baThemeRun>

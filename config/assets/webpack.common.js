@@ -264,7 +264,7 @@ module.exports = {
      *
      * See: https://www.npmjs.com/package/copy-webpack-plugin
      */
-    new CopyWebpackPlugin(config.folders.client.map(function(staticPath){
+    new CopyWebpackPlugin(config.folders.client.map(function(staticPath) {
       return {
         from: path.resolve('./' + staticPath + '/img'),
         to: `assets/${staticPath}/img`

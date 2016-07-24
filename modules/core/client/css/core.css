@@ -4,6 +4,9 @@
 .undecorated-link:hover {
   text-decoration: none;
 }
+.lead {
+  color: black;
+}
 [ng\:cloak],
 [ng-cloak],
 [x-ng-cloak],
