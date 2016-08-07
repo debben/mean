@@ -8,8 +8,9 @@ import '@angular/platform-browser';
 import '@angular/platform-browser-dynamic';
 import '@angular/core';
 import '@angular/common';
+import '@angular/forms';
 import '@angular/http';
-import '@angular/router-deprecated';
+import '@angular/router';
 
 // RxJS
 import 'rxjs/add/operator/map';
@@ -24,8 +25,8 @@ import 'lodash';
 if ('production' === ENV) {
   // Production
 
-
 } else {
   // Development
+  require('angular2-hmr');
 
 }

@@ -62,7 +62,7 @@ module.exports = {
    * See: http://webpack.github.io/docs/configuration.html#entry
    */
   entry: {
-    'initial': './modules/core/client/app/theme/initial.scss',
+    'initial': './node_modules/ng2-admin/src/app/theme/initial.scss',
     'polyfills': './modules/core/client/polyfills.browser.ts',
     'vendor': './modules/core/client/vendor.browser.ts',
     'main': './modules/core/client/main.browser.ts'
@@ -80,7 +80,7 @@ module.exports = {
      *
      * See: http://webpack.github.io/docs/configuration.html#resolve-extensions
      */
-    extensions: ['', '.ts', '.js', '.scss'],
+    extensions: ['', '.ts', '.js', '.css', '.scss', '.json'],
 
     root: './modules',
 
@@ -111,7 +111,7 @@ module.exports = {
        *
        * See: https://github.com/wbuchwalter/tslint-loader
        */
-       // { test: /\.ts$/, loader: 'tslint-loader', exclude: [ helpers.root('node_modules') ] },
+      // { test: /\.ts$/, loader: 'tslint-loader', exclude: [ helpers.root('node_modules') ] },
 
       /*
        * Source map loader support for *.js files
@@ -126,7 +126,10 @@ module.exports = {
         exclude: [
           // these packages have problems with their sourcemaps
           path.resolve('./', 'node_modules/rxjs'),
-          path.resolve('./', 'node_modules/@angular')
+          path.resolve('./', 'node_modules/@angular'),
+          // path.resolve('./', 'node_modules/@ngrx'),
+          // path.resolve('./', 'node_modules/ng2-bootstrap'),
+          path.resolve('./', 'node_modules/ng2-branchy')
         ]
       }
 
@@ -269,7 +272,12 @@ module.exports = {
         from: path.resolve('./' + staticPath + '/img'),
         to: `assets/${staticPath}/img`
       };
-    })),
+    }).concat([
+      {
+        from: path.resolve('./', 'node_modules/ng2-admin/src/assets/img'),
+        to: 'assets/img'
+      }
+    ])),
 
     /*
      * Plugin: HtmlWebpackPlugin
