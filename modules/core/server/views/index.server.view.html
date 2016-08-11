@@ -17,7 +17,7 @@
   <!-- base url -->
   <base href="<%= webpackConfig.metadata.baseUrl %>">
 
-
+  <link href="initial.css" rel="stylesheet"></head>
 </head>
 
 <body>
@@ -28,11 +28,21 @@
   <div id="preloader">
     <div></div>
   </div>
+  <!--Embedding The User Object-->
+  <script type="text/javascript">
+    <% if(user) { %>
+    var user = <%- JSON.stringify(user) %>;
+    <% } %>
+  </script>
+
   <!-- Google Analytics: change UA-71073175-1 to be your site's ID -->
   <% if (webpackConfig.metadata.isDevServer) { %>
   <!-- Webpack Dev Server reload -->
   <script src="/webpack-dev-server.js"></script>
   <% } %>
-
+<script type="text/javascript" src="polyfills.bundle.js"></script>
+<script type="text/javascript" src="vendor.bundle.js"></script>
+<script type="text/javascript" src="main.bundle.js"></script>
+<script type="text/javascript" src="initial.bundle.js"></script>
 </body>
 </html>

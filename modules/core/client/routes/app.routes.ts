@@ -1,10 +1,34 @@
-import {provideRouter, RouterConfig} from '@angular/router';
+import {provideRouter, RouterConfig, Route} from '@angular/router';
 import {Home} from '../components/home.component';
+import {AuthGuard} from '../providers/AuthGuard';
+
+import {ArticleRoutes} from '../../../articles/client/routes/articles.routes';
+
+let addRouteChecks = function(routes:Array<Route>):Array<Route>
+{
+  routes.forEach((route)=>{
+    if(route.children)
+    {
+      addRouteChecks(route.children);
+    }
+    if(!route.canActivate)
+    {
+      route.canActivate = [];
+    }
+    route.canActivate.push(AuthGuard);
+  });
+  return routes;
+}
+
+const otherRoutes = addRouteChecks([
+  ...ArticleRoutes
+]);
 
 export const routes:RouterConfig = [
   {
     path: '',
     component: Home,
+    canActivate: [AuthGuard],
     data: {
       menu: {
           title: "Home",
@@ -15,6 +39,7 @@ export const routes:RouterConfig = [
       }
     }
   },
+  ...otherRoutes,
   {
     path: '**',
     redirectTo: '/'

@@ -9,14 +9,15 @@ import { bootstrap } from '@angular/platform-browser-dynamic';
 import { PLATFORM_PROVIDERS } from './platform/browser';
 import { ENV_PROVIDERS, decorateComponentRef } from './platform/environment';
 
-
 /*
 * App Component
 * our top level component that holds all of our components
 */
 import { App } from './components/app.component';
 import { AppState } from 'ng2-admin/src/app/app.state';
-const APP_PROVIDERS = [AppState];
+import { AuthenticationProvider } from '../../users/client/services/authentication.client.service';
+
+const APP_PROVIDERS = [AppState, AuthenticationProvider];
 /*
  * Bootstrap our Angular app with a top level component `App` and inject
  * our Services and Providers into Angular's dependency injection

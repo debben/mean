@@ -1,7 +1,7 @@
 'use strict';
 
 var validator = require('validator');
-
+var webpackConfig = require('../../../../config/assets/webpack.config.js');
 /**
  * Render the main application page
  */
@@ -24,7 +24,8 @@ exports.renderIndex = function (req, res) {
   }
 
   res.render('modules/core/server/views/index', {
-    user: safeUserObject
+    user: safeUserObject,
+    webpackConfig
   });
 };
 
