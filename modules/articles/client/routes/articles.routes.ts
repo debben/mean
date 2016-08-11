@@ -21,7 +21,7 @@ export const ArticleRoutes = [{
       path: 'create',
       component: ArticleEdit,
       data: {
-        roles: ['user', 'admin']
+//        roles: ['user', 'admin']
       }
     }
   ]

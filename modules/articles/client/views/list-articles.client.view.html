@@ -16,6 +16,6 @@
     </a>
   </div>
   <div class="alert alert-warning text-center" *ngIf="articles.$resolved && !articles.length">
-    No articles yet, why don't you <a ui-sref="articles.create">create one</a>?
+    No articles yet, why don't you <a routerLink="/articles/create">create one</a>?
   </div>
 </section>
