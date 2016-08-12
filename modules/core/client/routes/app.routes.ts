@@ -2,7 +2,7 @@ import {provideRouter, RouterConfig, Route} from '@angular/router';
 import {Home} from '../components/home.component';
 import {AuthGuard} from '../providers/AuthGuard';
 import {UiContainer} from '../components/uiContainer.component';
-
+import {UserRoutes, LoginRoutes} from '../../../users/client/routes/user.client.routes';
 import {ArticleRoutes} from '../../../articles/client/routes/articles.routes';
 
 let addRouteChecks = function(routes:Array<Route>):Array<Route>
@@ -22,10 +22,12 @@ let addRouteChecks = function(routes:Array<Route>):Array<Route>
 }
 
 const otherRoutes = addRouteChecks([
-  ...ArticleRoutes
+  ...ArticleRoutes,
+  ...UserRoutes
 ]);
 
 export const routes:RouterConfig = [
+  ...LoginRoutes,
   {
     path: '',
     component: UiContainer,
