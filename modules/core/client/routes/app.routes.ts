@@ -1,6 +1,7 @@
 import {provideRouter, RouterConfig, Route} from '@angular/router';
 import {Home} from '../components/home.component';
 import {AuthGuard} from '../providers/AuthGuard';
+import {UiContainer} from '../components/uiContainer.component';
 
 import {ArticleRoutes} from '../../../articles/client/routes/articles.routes';
 
@@ -27,19 +28,25 @@ const otherRoutes = addRouteChecks([
 export const routes:RouterConfig = [
   {
     path: '',
-    component: Home,
+    component: UiContainer,
     canActivate: [AuthGuard],
-    data: {
-      menu: {
+    children:[{
+      path:'',
+      component: Home,
+      canActivate: [AuthGuard],
+      data: {
+        menu: {
           title: "Home",
           icon: 'ion-android-home',
           selected: false,
           expanded: false,
           order:0
+        }
       }
-    }
+    },
+    ...otherRoutes,
+    ]
   },
-  ...otherRoutes,
   {
     path: '**',
     redirectTo: '/'

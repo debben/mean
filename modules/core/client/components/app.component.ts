@@ -21,30 +21,18 @@ import { AppState } from 'ng2-admin/src/app/app.state';
  */
 @Component({
   selector: 'app',
-  pipes: [ ],
+  pipes: [],
+  directives: [BaThemeRun],
   providers: [BaThemeConfigProvider, BaThemeConfig, BaImageLoaderService, BaThemeSpinner],
-  directives: [BaPageTop, BaSidebar, BaContentTop, BaBackTop, BaThemeRun],
   encapsulation: ViewEncapsulation.None,
-  styles: [
-    //require('normalize.css'),
-    require('../css/app.scss')
-  ],
+  styles: [require('../css/app.scss')],
   template: `
-  <main [ngClass]="{'menu-collapsed': isMenuCollapsed}" baThemeRun>
-    <div class="additional-bg"></div>
-    <ba-sidebar></ba-sidebar>
-    <ba-page-top [title]="appTitle"></ba-page-top>
-    <div class="al-main">
-      <div class="al-content">
-        <ba-content-top></ba-content-top>
-        <router-outlet></router-outlet>
-      </div>
-    </div>
-    <ba-back-top position="200"></ba-back-top>
-  </main>
-  `
+    <main [ngClass]="{'menu-collapsed': isMenuCollapsed}" baThemeRun>
+      <div class="additional-bg"></div>
+      <router-outlet></router-outlet>
+    </main>
+    `
 })
-
 export class App {
   loading = false;
   appTitle = 'MEAN';
