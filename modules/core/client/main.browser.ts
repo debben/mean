@@ -16,7 +16,7 @@ import { ENV_PROVIDERS, decorateComponentRef } from './platform/environment';
 import { App } from './components/app.component';
 import { AppState } from 'ng2-admin/src/app/app.state';
 import { AuthenticationProvider } from '../../users/client/services/authentication.client.service';
-
+import { LastRouteService } from './services/lastRouteService.service';
 const APP_PROVIDERS = [AppState, AuthenticationProvider];
 /*
  * Bootstrap our Angular app with a top level component `App` and inject
@@ -30,6 +30,11 @@ export function main(initialHmrState?: any): Promise<any> {
     ...ENV_PROVIDERS,
     ...APP_PROVIDERS,
   ])
+    .then((componentRef) => {
+      // construct the LastRouteService so the subscription is active.
+      componentRef.injector.get(LastRouteService);
+      return Promise.resolve(componentRef);
+    })
     .then(decorateComponentRef)
     .catch(err => console.error(err));
 

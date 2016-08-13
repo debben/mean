@@ -18,7 +18,8 @@ import { disableDeprecatedForms, provideForms } from '@angular/forms';
 
 import { routes } from '../routes/app.routes';
 
-import {AuthGuard} from '../providers/AuthGuard';
+import { AuthGuard } from '../providers/AuthGuard';
+import { LastRouteService } from '../services/lastRouteService.service';
 /*
  * Application Providers/Directives/Pipes
  * providers/directives/pipes that only live in our browser environment
@@ -34,7 +35,8 @@ export const APPLICATION_PROVIDERS = [
 
   { provide: LocationStrategy, useClass: HashLocationStrategy },
   provide(Window, { useValue: window }),
-  AuthGuard
+  AuthGuard,
+  LastRouteService
 ];
 
 export const PROVIDERS = [
