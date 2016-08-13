@@ -1,6 +1,6 @@
 import {Component, ViewEncapsulation} from '@angular/core';
 import {FormGroup, AbstractControl, FormBuilder, Validators} from '@angular/forms';
-
+require('../img/buttons/facebook.png')
 @Component({
   selector: 'login',
   encapsulation: ViewEncapsulation.None,
@@ -9,10 +9,10 @@ import {FormGroup, AbstractControl, FormBuilder, Validators} from '@angular/form
 })
 export class Login {
 
-  public form:FormGroup;
-  public email:AbstractControl;
-  public password:AbstractControl;
-  public submitted:boolean = false;
+  public form: FormGroup;
+  public email: AbstractControl;
+  public password: AbstractControl;
+  public submitted: boolean = false;
 
   constructor(fb:FormBuilder) {
     this.form = fb.group({

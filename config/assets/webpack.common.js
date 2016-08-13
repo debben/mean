@@ -7,7 +7,7 @@ const webpack = require('webpack');
 // client folders
 const config = require('../config');
 const path = require('path');
-const clientPaths = config.folders.client.forEach(function (staticPath) {
+const clientPaths = config.folders.client.map(function (staticPath) {
   var p = path.resolve('./' + staticPath);
   console.log(p);
   return p; // path.resolve('./' + staticPath);
@@ -121,7 +121,6 @@ module.exports = {
        */
       {
         test: /\.js$/,
-        include: clientPaths,
         loader: 'source-map-loader',
         exclude: [
           // these packages have problems with their sourcemaps
@@ -152,7 +151,6 @@ module.exports = {
        */
       {
         test: /\.ts$/,
-        include: clientPaths,
         loader: 'awesome-typescript-loader',
         exclude: [/\.(spec|e2e)\.ts$/]
       },
@@ -164,7 +162,6 @@ module.exports = {
        */
       {
         test: /\.json$/,
-        include: clientPaths,
         loader: 'json-loader'
       },
 
@@ -176,7 +173,6 @@ module.exports = {
        */
       {
         test: /\.css$/,
-        include: clientPaths,
         loader: 'raw-loader'
       },
 
@@ -208,13 +204,27 @@ module.exports = {
        *
        * See: https://github.com/webpack/raw-loader
        */
+      ...clientPaths.map((clientPath)=>{
+        console.log(`configuring webpack for path ${clientPath}`);
+        //  let root = path.resolve('./', 'modules');
+        return {
+          test: new RegExp(clientPath + '.+\.html$'),
+          loader: `html?interpolate=require&root=${clientPath}`
+        };
+      }),
       {
         test: /\.html$/,
-        include: clientPaths,
-        loader: 'raw-loader',
-        exclude: [path.resolve('modules/core/server/views/index.server.view.html')]
-      }
+        loader: `raw-loader`,
+        exclude: [...clientPaths, path.resolve('modules/core/server/views/index.server.view.html')]
+      },
 
+      /*
+       * png images
+       */
+      {
+        test: /\.png$/,
+        loader: "file-loader?name=[path][name].[ext]?[hash]"
+      }
     ]
 
   },

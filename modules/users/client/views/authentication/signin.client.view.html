@@ -1,16 +1,6 @@
 <div class="auth-main">
   <div class="auth-block">
-
-    <h3 class="col-md-12 text-center">Sign in using your social accounts</h3>
-    <div class="col-md-12 text-center social-block">
-      <img (click)="callOauthProvider('/api/auth/facebook')" src="/assets/modules/users/client/img/buttons/facebook.png">
-      <img (click)="callOauthProvider('/api/auth/twitter')" src="/assets/modules/users/client/img/buttons/twitter.png">
-      <img (click)="callOauthProvider('/api/auth/google')" src="/assets/modules/users/client/img/buttons/google.png">
-      <img (click)="callOauthProvider('/api/auth/linkedin')" src="/assets/modules/users/client/img/buttons/linkedin.png">
-      <img (click)="callOauthProvider('/api/auth/github')" src="/assets/modules/users/client/img/buttons/github.png">
-      <img (click)="callOauthProvider('/api/auth/paypal')"  src="/assets/modules/users/client/img/buttons/paypal.png">
-    </div>
-
+    ${require('./authentication.client.view.html')}
     <div class="auth-sep"><span><span>or Sign in with your MEAN account.</span></span></div>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="form-horizontal">
