@@ -2,7 +2,7 @@
   <div class="auth-block">
     <h3 class="col-md-12 text-center">Sign up using your social accounts</h3>
     ${require('./authentication.client.view.html')}
-    <div class="auth-sep"><span><span>or enter your info below</span></span></div>
+    <div class="col-md-12 auth-sep"><span><span>or enter your info below</span></span></div>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="form-horizontal">
       <div class="form-group row" [ngClass]="{'has-error': (!firstName.valid && firstName.touched), 'has-success': (firstName.valid && firstName.touched)}">

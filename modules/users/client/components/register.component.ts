@@ -1,6 +1,10 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, Inject } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { EmailValidator, EqualPasswordsValidator } from 'ng2-admin/src/app/theme/validators';
+import { AuthBase } from './authBase';
+import { Router, ActivatedRoute } from '@angular/router';
+import { LastRouteService } from '../../../core/client/services/lastRouteService.service';
+import { Window, IWindow } from '../../../core/client/platform/Window';
 
 @Component({
   selector: 'register',
@@ -9,8 +13,7 @@ import { EmailValidator, EqualPasswordsValidator } from 'ng2-admin/src/app/theme
   styles: [require('../css/users.scss')],
   template: require('../views/authentication/signup.client.view.html'),
 })
-export class Register {
-
+export class Register extends AuthBase {
   public form: FormGroup;
   public firstName: AbstractControl;
   public lastName: AbstractControl;
@@ -22,8 +25,8 @@ export class Register {
 
   public submitted: boolean = false;
 
-  constructor(fb: FormBuilder) {
-
+  constructor(fb: FormBuilder, router:Router, @Inject(Window) window: IWindow, lastRoute: LastRouteService) {
+    super(router, window, lastRoute);
     this.form = fb.group({
       'lastName': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
       'firstName': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
@@ -45,7 +48,7 @@ export class Register {
     this.repeatPassword = this.passwords.controls['repeatPassword'];
   }
 
-  public onSubmit(values:Object):void {
+  public onSubmit(values: Object): void {
     this.submitted = true;
     if (this.form.valid) {
       // your code goes here

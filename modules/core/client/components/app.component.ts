@@ -8,11 +8,6 @@ import {BaThemePreloader} from 'ng2-admin/src/app/theme/services/baThemePreloade
 import {BaThemeSpinner} from 'ng2-admin/src/app/theme/services/baThemeSpinner';
 import {layoutPaths, BaThemeConfigProvider, BaThemeConfig} from 'ng2-admin/src/app/theme';
 import {BaThemeRun} from 'ng2-admin/src/app/theme/directives/baThemeRun';
-//
-import {BaPageTop} from 'ng2-admin/src/app/theme/components/baPageTop';
-import {BaContentTop} from 'ng2-admin/src/app/theme/components/baContentTop';
-import {BaSidebar} from 'ng2-admin/src/app/theme/components/baSidebar';
-import {BaBackTop} from 'ng2-admin/src/app/theme/components/baBackTop';
 import { AppState } from 'ng2-admin/src/app/app.state';
 
 /*
@@ -39,7 +34,10 @@ export class App {
 
   isMenuCollapsed:boolean = false;
 
-  constructor(private _state:AppState, private _imageLoader:BaImageLoaderService, private _spinner:BaThemeSpinner, private _config:BaThemeConfig) {
+  constructor(private _state: AppState,
+              private _imageLoader: BaImageLoaderService,
+              private _spinner: BaThemeSpinner,
+              private _config: BaThemeConfig) {
     this._loadImages();
 
     this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
