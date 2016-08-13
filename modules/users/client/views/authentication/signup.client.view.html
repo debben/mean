@@ -4,7 +4,7 @@
     ${require('./authentication.client.view.html')}
     <div class="col-md-12 auth-sep"><span><span>or enter your info below</span></span></div>
 
-    <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="form-horizontal">
+    <form [formGroup]="form" (ngSubmit)="signUp(form.value)" class="form-horizontal">
       <div class="form-group row" [ngClass]="{'has-error': (!firstName.valid && firstName.touched), 'has-success': (firstName.valid && firstName.touched)}">
         <label for="fristNameInput" class="col-sm-2 control-label">First</label>
 
@@ -26,18 +26,18 @@
           <input [formControl]="email" type="email" class="form-control" id="inputEmail3" placeholder="Email">
         </div>
       </div>
-      <div class="form-group row" [ngClass]="{'has-error': (!password.valid && password.touched), 'has-success': (password.valid && password.touched)}">
-        <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-
-        <div class="col-sm-10">
-          <input [formControl]="password" type="password" class="form-control" id="inputPassword3" placeholder="Password">
-        </div>
-      </div>
       <div class="form-group row" [ngClass]="{'has-error': (!username.valid && username.touched), 'has-success': (username.valid && username.touched)}">
         <label for="usernameInput" class="col-sm-2 control-label">Usernae</label>
 
         <div class="col-sm-10">
           <input [formControl]="username" type="text" class="form-control" id="usernameInput" placeholder="Username">
+        </div>
+      </div>
+      <div class="form-group row" [ngClass]="{'has-error': (!password.valid && password.touched), 'has-success': (password.valid && password.touched)}">
+        <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+
+        <div class="col-sm-10">
+          <input [formControl]="password" type="password" class="form-control" id="inputPassword3" placeholder="Password">
         </div>
       </div>
       <div class="form-group row" [ngClass]="{'has-error': (!repeatPassword.valid && repeatPassword.touched), 'has-success': (repeatPassword.valid && repeatPassword.touched)}">
@@ -52,6 +52,9 @@
         <button [disabled]="!form.valid" type="submit" class="btn btn-primary btn-auth">Sign up</button>
         &nbsp; or&nbsp;
         <a [routerLink]="['Login']" class="show-signup auth-link">Sign in</a>
+      </div>
+      <div *ngIf="error" class="text-center text-danger">
+        <strong [innerText]="error"></strong>
       </div>
     </form>
   </div>

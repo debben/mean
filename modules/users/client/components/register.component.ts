@@ -1,16 +1,18 @@
 import { Component, ViewEncapsulation, Inject } from '@angular/core';
+import { Http, Response } from '@angular/http';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { EmailValidator, EqualPasswordsValidator } from 'ng2-admin/src/app/theme/validators';
 import { AuthBase } from './authBase';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LastRouteService } from '../../../core/client/services/lastRouteService.service';
 import { Window, IWindow } from '../../../core/client/platform/Window';
+import { Authentication } from '../services/authentication.client.service';
 
 @Component({
   selector: 'register',
   encapsulation: ViewEncapsulation.None,
   directives: [],
-  styles: [require('../css/users.scss')],
+  styles: [require('../css/users.scss'), require('../css/users.css')],
   template: require('../views/authentication/signup.client.view.html'),
 })
 export class Register extends AuthBase {
@@ -22,14 +24,19 @@ export class Register extends AuthBase {
   public password: AbstractControl;
   public repeatPassword: AbstractControl;
   public passwords: FormGroup;
-
+  public error: string;
   public submitted: boolean = false;
 
-  constructor(fb: FormBuilder, router:Router, @Inject(Window) window: IWindow, lastRoute: LastRouteService) {
+  constructor(fb: FormBuilder,
+              router: Router,
+              @Inject(Window) window: IWindow,
+              lastRoute: LastRouteService,
+              @Inject(Authentication) private authentication,
+              private http: Http) {
     super(router, window, lastRoute);
     this.form = fb.group({
       'lastName': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
-      'firstName': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
+      'firstName': ['', Validators.compose([Validators.required, Validators.minLength(2)])],
       'email': ['', Validators.compose([Validators.required, EmailValidator.validate])],
       // todo add async username availability validator.
       'username': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
@@ -48,11 +55,34 @@ export class Register extends AuthBase {
     this.repeatPassword = this.passwords.controls['repeatPassword'];
   }
 
-  public onSubmit(values: Object): void {
+  public signUp(values: Object): Promise<boolean> {
     this.submitted = true;
     if (this.form.valid) {
-      // your code goes here
-      // console.log(values);
+      return this.http.post('/api/auth/signup', values)
+        .map(this.extractData.bind(this)) // If successful we assign the response to the global user model
+        .toPromise()
+        .then((response) => {
+          // And redirect to the pr1evious or home page
+          if (this.lastRoute.lastUrl) {
+            this.router.navigateByUrl(this.lastRoute.lastUrl);
+          }
+          else {
+            this.router.navigate(['/home']);
+          }
+        })
+        .catch((err) => {
+          err = JSON.parse(err._body).message;
+          this.error = err;
+          console.error(err);
+        });
     }
+    else {
+      // Todo broadcast a notification about the invalid.
+      return Promise.reject(false);
+    }
+  }
+
+  private extractData(response) {
+    this.authentication.user = JSON.parse(response._body);
   }
 }

@@ -7,7 +7,7 @@ export class AuthBase {
   // OAuth provider request
   constructor(public router: Router,
               private window: IWindow,
-              private lastRoute: LastRouteService ) {
+              public lastRoute: LastRouteService ) {
   }
 
   public callOauthProvider(url) {
