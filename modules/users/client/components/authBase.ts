@@ -15,6 +15,12 @@ export class AuthBase {
               private http: Http) {
   }
 
+  public ngOnInit() {
+    if (this.authentication.user) {
+      this.router.navigateByUrl('/');
+    }
+  }
+
   public callOauthProvider(url) {
     if (this.lastRoute && this.lastRoute.lastUrl) {
        url += '?redirect_to=' + this.lastRoute.lastUrl;
