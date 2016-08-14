@@ -31,18 +31,19 @@ export class Register extends AuthBase {
               router: Router,
               @Inject(Window) window: IWindow,
               lastRoute: LastRouteService,
-              @Inject(Authentication) private authentication,
-              private http: Http) {
-    super(router, window, lastRoute);
+              @Inject(Authentication) authentication,
+              http: Http) {
+    super(router, window, lastRoute, authentication, http);
     this.form = fb.group({
       'lastName': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
       'firstName': ['', Validators.compose([Validators.required, Validators.minLength(2)])],
       'email': ['', Validators.compose([Validators.required, EmailValidator.validate])],
       // todo add async username availability validator.
       'username': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
+    // client-side validation of the password rules enforced on the server-side.
       'passwords': fb.group({
-      'password': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
-      'repeatPassword': ['', Validators.compose([Validators.required, Validators.minLength(4)])]
+        'password': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
+        'repeatPassword': ['', Validators.compose([Validators.required, Validators.minLength(4)])]
       }, {validator: EqualPasswordsValidator.validate('password', 'repeatPassword')})
     });
 
@@ -58,23 +59,9 @@ export class Register extends AuthBase {
   public signUp(values: Object): Promise<boolean> {
     this.submitted = true;
     if (this.form.valid) {
-      return this.http.post('/api/auth/signup', values)
-        .map(this.extractData.bind(this)) // If successful we assign the response to the global user model
-        .toPromise()
-        .then((response) => {
-          // And redirect to the pr1evious or home page
-          if (this.lastRoute.lastUrl) {
-            this.router.navigateByUrl(this.lastRoute.lastUrl);
-          }
-          else {
-            this.router.navigate(['/home']);
-          }
-        })
-        .catch((err) => {
-          err = JSON.parse(err._body).message;
-          this.error = err;
-          console.error(err);
-        });
+      values.password = values.passwords.password;
+      delete values.passwords;
+      return this.postAuthRequest('/api/auth/signup', values);
     }
     else {
       // Todo broadcast a notification about the invalid.
@@ -82,7 +69,4 @@ export class Register extends AuthBase {
     }
   }
 
-  private extractData(response) {
-    this.authentication.user = JSON.parse(response._body);
-  }
 }

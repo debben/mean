@@ -3,10 +3,10 @@
  */
 import { Component, ViewEncapsulation } from '@angular/core';
 
-import {BaPageTop} from 'ng2-admin/src/app/theme/components/baPageTop';
-import {BaContentTop} from 'ng2-admin/src/app/theme/components/baContentTop';
-import {BaSidebar} from 'ng2-admin/src/app/theme/components/baSidebar';
-import {BaBackTop} from 'ng2-admin/src/app/theme/components/baBackTop';
+import { BaPageTop } from 'ng2-admin/src/app/theme/components/baPageTop';
+import { BaContentTop } from 'ng2-admin/src/app/theme/components/baContentTop';
+import { BaSidebar } from 'ng2-admin/src/app/theme/components/baSidebar';
+import { BaBackTop } from 'ng2-admin/src/app/theme/components/baBackTop';
 
 /*
  * App Component
