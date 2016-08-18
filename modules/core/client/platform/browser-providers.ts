@@ -11,6 +11,9 @@ import { Window } from './Window';
 
 // Angular 2 Http
 import { HTTP_PROVIDERS } from '@angular/http';
+// ng2 resource providers
+import { RESOURCE_PROVIDERS } from "ng2-resource-rest";
+
 // Angular 2 Router
 import { provideRouter } from '@angular/router';
 // Angular 2 forms
@@ -32,7 +35,7 @@ export const APPLICATION_PROVIDERS = [
   provideRouter(routes),
 
   ...HTTP_PROVIDERS,
-
+  RESOURCE_PROVIDERS,
   { provide: LocationStrategy, useClass: HashLocationStrategy },
   provide(Window, { useValue: window }),
   AuthGuard,
