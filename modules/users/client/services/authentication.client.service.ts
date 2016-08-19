@@ -13,6 +13,6 @@ export let AuthenticationFactory = function(@Inject(Window) window:IWindow){
 
 export let AuthenticationProvider = {
   provide: Authentication,
-  useFactory: AuthenticationFactory
+  useFactory: AuthenticationFactory,
   deps: [Window]
 };
