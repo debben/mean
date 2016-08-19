@@ -2,6 +2,7 @@ import { Component, ViewEncapsulation, Inject } from '@angular/core';
 import { UsersService } from '../../services/users.client.service.ts';
 import { ActivatedRoute } from '@angular/router';
 import { Authentication } from '../../services/authentication.client.service';
+import { BaseUser } from './baseUser.component';
 
 @Component({
   selector: 'user',
@@ -9,20 +10,17 @@ import { Authentication } from '../../services/authentication.client.service';
   template: require('../../views/admin/view-user.client.view.html'),
   styles: [require('../../css/users.css')]
 })
-export class User {
-  public user: any;
+export class User extends BaseUser {
 
-  constructor(private userService: UsersService,
-              private route: ActivatedRoute,
-              @Inject(Authentication) public authentication: any) {
-
+  constructor(userService: UsersService,
+              route: ActivatedRoute,
+              @Inject(Authentication) authentication: any) {
+    super(authentication, userService, route);
   }
 
-  ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.user = this.userService.get({id:params['userId']});
-    });
-  }
+  // ngOnInit() {
+  //   super.ngOnInit();
+  // }
 
   remove() {
 

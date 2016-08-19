@@ -3,6 +3,7 @@ import { Login } from '../components/login.component';
 import { Register } from '../components/register.component';
 import { ListUsers } from '../components/admin/listUsers.component';
 import { User } from '../components/admin/user.component';
+import { EditUser } from '../components/admin/editUser.component';
 
 export const AdminRoutes: RouterConfig = [
   {
@@ -14,6 +15,10 @@ export const AdminRoutes: RouterConfig = [
   {
     path: 'users/:userId',
     component: User
+  },
+  {
+    path: 'users/:userId/edit',
+    component: EditUser
   }]
   }
 ];
