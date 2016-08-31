@@ -3,21 +3,21 @@
     <h1>{{article._id ? 'Edit Article' : 'New Article'}}</h1>
   </div>
   <div class="col-md-12">
-    <form name="articleForm" class="form-horizontal" ng-submit="vm.save(vm.form.articleForm.$valid)" novalidate>
+    <form [formGroup]="form" name="articleForm" class="form-horizontal" (ngSubmit)="save(form.value)" novalidate>
       <fieldset>
         <div class="form-group" show-errors>
           <label class="control-label" for="title">Title</label>
-          <input name="title" type="text" [(ngModel)]="article.title" id="title" class="form-control" placeholder="Title" required>
+          <input name="title" type="text" [(ngModel)]="article.title" id="title" [formControl]="title" class="form-control" placeholder="Title" required>
         </div>
         <div class="form-group">
           <label class="control-label" for="content">Content</label>
-          <textarea name="content" [(ngModel)]="article.content" id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
+          <textarea name="content" [(ngModel)]="article.content" id="content" [formControl]="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
         </div>
         <div class="form-group">
-          <button type="submit" class="btn btn-default">{{article._id ? 'Update' : 'Create'}}</button>
+          <input type="submit" class="btn btn-default" [value]="article._id ? 'Update' : 'Create'"/>
         </div>
-        <div ng-show="error" class="text-danger">
-          <strong ng-bind="error"></strong>
+        <div *ngIf="error" class="text-danger">
+          <strong [innerText]="error"></strong>
         </div>
       </fieldset>
     </form>

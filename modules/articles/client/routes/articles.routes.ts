@@ -1,12 +1,13 @@
-import {ArticleList} from '../components/articleList.component';
-import {ArticleEdit} from '../components/articleEdit.component';
+import { ArticleList } from '../components/articleList.component';
+import { ArticleEdit } from '../components/articleEdit.component';
+import { ArticleView } from '../components/articleView.component';
 
 export const ArticleRoutes = [{
   path: 'articles',
   data: {
     menu: {
-      title: "Articles",
-      icon: "ion-ios-paper",
+      title: 'Articles',
+      icon: 'ion-ios-paper',
       selected: false,
       expanded: false,
       order:1
@@ -15,14 +16,32 @@ export const ArticleRoutes = [{
   children: [
     {
       path: '',
-      component:ArticleList
+      component: ArticleList,
+      data: {
+        menu: {
+          title: 'List Articles',
+          selected: false,
+          expanded: false,
+          order: 2
+        }
+      }
     },
     {
       path: 'create',
       component: ArticleEdit,
       data: {
-//        roles: ['user', 'admin']
+        menu: {
+          title: 'Create Article',
+          selected: false,
+          expanded: false,
+          order: 3
+        },
+        roles: ['user', 'admin']
       }
+    },
+    {
+      path: ':articleId',
+      component: ArticleView
     }
   ]
 }];

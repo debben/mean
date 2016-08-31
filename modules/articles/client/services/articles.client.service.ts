@@ -4,10 +4,7 @@ import {Injectable} from "@angular/core";
 @Injectable()
 @ResourceParams({
   url: 'api/',
-  path: 'articles/{articleId}',
-  params: {
-    "articleId": '@_id'
-  }
+  path: 'articles/{id}',
 })
 export class ArticlesService extends Resource {
 
