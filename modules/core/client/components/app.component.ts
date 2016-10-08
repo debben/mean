@@ -8,7 +8,7 @@ import {BaThemePreloader} from 'ng2-admin/src/app/theme/services/baThemePreloade
 import {BaThemeSpinner} from 'ng2-admin/src/app/theme/services/baThemeSpinner';
 import {layoutPaths, BaThemeConfigProvider, BaThemeConfig} from 'ng2-admin/src/app/theme';
 import {BaThemeRun} from 'ng2-admin/src/app/theme/directives/baThemeRun';
-import { AppState } from 'ng2-admin/src/app/app.state';
+import { GlobalState } from 'ng2-admin/src/app/global.state';
 
 /*
  * App Component
@@ -16,8 +16,6 @@ import { AppState } from 'ng2-admin/src/app/app.state';
  */
 @Component({
   selector: 'app',
-  pipes: [],
-  directives: [BaThemeRun],
   providers: [BaThemeConfigProvider, BaThemeConfig, BaImageLoaderService, BaThemeSpinner],
   encapsulation: ViewEncapsulation.None,
   styles: [require('../css/app.scss')],
@@ -34,7 +32,7 @@ export class App {
 
   isMenuCollapsed:boolean = false;
 
-  constructor(private _state: AppState,
+  constructor(private _state: GlobalState,
               private _imageLoader: BaImageLoaderService,
               private _spinner: BaThemeSpinner,
               private _config: BaThemeConfig) {

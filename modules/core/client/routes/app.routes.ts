@@ -1,10 +1,7 @@
-import { provideRouter, RouterConfig, Route } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { Home } from '../components/home.component';
 import { AuthGuard } from '../providers/AuthGuard';
 import { UiContainer } from '../components/uiContainer.component';
-import { AdminRoutes, LoginRoutes } from '../../../users/client/routes/user.client.routes';
-import { Login } from '../../../users/client/components/login.component';
-import { ArticleRoutes } from '../../../articles/client/routes/articles.routes';
 
 let addRouteChecks = function(routes:Array<Route>):Array<Route> {
   routes.forEach((route) => {
@@ -20,13 +17,7 @@ let addRouteChecks = function(routes:Array<Route>):Array<Route> {
   return routes;
 }
 
-const otherRoutes = addRouteChecks([
-  ...ArticleRoutes,
-  ...AdminRoutes
-]);
-
-export const routes: RouterConfig = [
-  ...LoginRoutes,
+export const routes: Routes = [
   {
     path: '',
     component: UiContainer,
@@ -37,16 +28,9 @@ export const routes: RouterConfig = [
         component: Home,
         canActivate: [AuthGuard],
         data: {
-          menu: {
-            title: 'Home',
-            icon: 'ion-android-home',
-            selected: false,
-            expanded: false,
-            order: 0
-          }
+
         }
-      },
-      ...otherRoutes,
+      }
     ]
   },
   {
@@ -55,6 +39,4 @@ export const routes: RouterConfig = [
   },
 ];
 
-export const APP_ROUTER_PROVIDERS = [
-  provideRouter(routes)
-];
+export const routing = RouterModule.forRoot(routes, { useHash: true });
