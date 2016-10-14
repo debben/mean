@@ -3,7 +3,7 @@ import { Home } from '../components/home.component';
 import { AuthGuard } from '../providers/AuthGuard';
 import { UiContainer } from '../components/uiContainer.component';
 
-let addRouteChecks = function(routes:Array<Route>):Array<Route> {
+let addRouteChecks = function(routes: Routes): Routes {
   routes.forEach((route) => {
     if (route.children) {
       addRouteChecks(route.children);
@@ -21,22 +21,13 @@ export const routes: Routes = [
   {
     path: '',
     component: UiContainer,
-    canActivate: [AuthGuard],
     children: [
-      {
-        path: '',
-        component: Home,
-        canActivate: [AuthGuard],
-        data: {
-
-        }
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: 'home', component: Home },
+      { path: 'admin', loadChildren: 'admin'
       }
     ]
-  },
-  {
-    path: '**',
-    redirectTo: '/'
-  },
+  }
 ];
 
 export const routing = RouterModule.forRoot(routes, { useHash: true });

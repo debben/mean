@@ -1,60 +1,44 @@
-import { provideRouter, RouterConfig, Route } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { Login } from '../components/login.component';
 import { Register } from '../components/register.component';
 import { ListUsers } from '../components/admin/listUsers.component';
 import { User } from '../components/admin/user.component';
 import { EditUser } from '../components/admin/editUser.component';
 
-export const AdminRoutes: RouterConfig = [
+export const AdminRoutes: Routes = [
   {
-    path: 'admin',
-    data: {
-      menu: {
-        title: 'Administration',
-        icon: 'ion-android-person',
-        selected: false,
-        expanded: false,
-        order: 9999
-      }
-    },
+    path: '',
     children: [{
       path: 'users',
       component: ListUsers,
       data: {
-        menu: {
-          title: 'Manage Users',
-          icon: 'ion-android-person',
-          selected: false,
-          expanded: false,
-          order: 1
-        },
         roles: [
           'admin'
         ]
       }
-  },
-  {
-    path: 'users/:userId',
-    component: User,
-    data: {
-      roles: [
-        'admin'
-      ]
-    }
-  },
-  {
-    path: 'users/:userId/edit',
-    component: EditUser,
-    data: {
-      roles: [
-        'admin'
-      ]
-    }
-  }]
+    },
+    {
+      path: 'users/:userId',
+      component: User,
+      data: {
+        roles: [
+          'admin'
+        ]
+      }
+    },
+    {
+      path: 'users/:userId/edit',
+      component: EditUser,
+      data: {
+        roles: [
+          'admin'
+        ]
+      }
+    }]
   }
 ];
 
-export const LoginRoutes: RouterConfig = [
+export const LoginRoutes: Routes = [
   {
     path: 'login',
     component: Login
@@ -64,3 +48,5 @@ export const LoginRoutes: RouterConfig = [
     component: Register
   }
 ];
+
+export const routing = RouterModule.forChild([...LoginRoutes, ...AdminRoutes]);

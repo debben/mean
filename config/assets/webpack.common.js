@@ -136,7 +136,6 @@ module.exports = function (options) {
             replace: '$1.import($3).then(mod => (mod.__esModule && mod.default) ? mod.default : mod)',
             flags: 'g'
           },
-          include: [helpers.root('src')]
         },
         {
           test: /\.js$/,

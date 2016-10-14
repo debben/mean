@@ -1,3 +1,5 @@
+import { USERS_MENU } from '../../users/client/users.menu';
+
 export const MENU = [
   {
     path: '/',
@@ -10,5 +12,6 @@ export const MENU = [
         order: 0
       }
     }
-  }
+  },
+  ...USERS_MENU
 ];

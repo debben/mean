@@ -7,10 +7,14 @@ import { ResourceModule } from 'ng2-resource-rest';
 import { NgaModule } from '../../core/client/nga.module';
 
 /* Providers */
-import { AuthenticationProvider } from './services'
+import { AuthenticationProvider,
+         UsersService } from './services/index.ts';
 
 /* Components */
 import { EditUser, ListUsers, User, Login, Register} from './components';
+
+// routes
+import { routing } from './routes/user.client.routes';
 
 @NgModule({
   declarations: [
@@ -21,19 +25,19 @@ import { EditUser, ListUsers, User, Login, Register} from './components';
     EditUser
   ],
   imports: [
+    HttpModule,
     BrowserModule,
     ResourceModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    NgaModule
+    NgaModule,
+    routing
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
-    AuthenticationProvider
-  ],
-  exports: [
+    AuthenticationProvider,
+    UsersService
   ]
 })
-
 export class UsersModule {
 }
